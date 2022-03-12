@@ -1,3 +1,20 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+require("dotenv/config");
 
-const app = express;
+app.use(cors());
+app.use(bodyParser.json());
+
+const auth = require("./routes/auth");
+
+app.use("/", auth);
+
+mongoose.connect(process.env.DB_CONNECTION, () => {
+  console.log("connection working");
+});
+app.listen(8081, () => {
+  console.log("listening");
+});
