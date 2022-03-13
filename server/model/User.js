@@ -22,20 +22,20 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    trim: true,
     required: [true, "Password is required"],
     select: false,
     minlength: 5,
   },
   confirmPassword: {
     type: String,
-    trim: true,
-    required: [true, "Confirm your password"],
+    required: ["Confirm your password"],
     select: false,
-    validate: function (match) {
-      return match === this.password;
+    validate: {
+      validator: function (match) {
+        return match === this.password;
+      },
+      message: "Passwords do not match.",
     },
-    message: "Passwords do not match",
   },
 });
 
