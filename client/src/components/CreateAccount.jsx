@@ -1,133 +1,98 @@
-import { React, useState } from "react";
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 
 function CreateAccount() {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-  // const [message, setMessage] = useState("");
-  const initialValues = {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
-  };
-  const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
+  });
+  const password = useRef({});
+  const [message, setMessage] = useState("");
+  password.current = watch("password", "");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(formValues));
-  };
-
-  const validate = (values) => {
-    const errors = {};
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!values.username) {
-      errors.username = "Username is required";
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("http://localhost:8081/create", {
+        method: "POST",
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      await response.json();
+      if (response.status === 201) {
+        setMessage("User has been created!");
+      } else {
+        setMessage("Something went wrong :(");
+      }
+    } catch (err) {
+      console.log(err);
     }
-    if (!values.password) {
-      errors.password = "Username is required";
-    }
   };
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //
-  //     if (password != confirmPassword) {
-  //       setMessage("Passwords do not match.");
-  //       throw new Error();
-  //     }
-  //     if (password < 5) {
-  //       setMessage("Minimum password length is 5 characters.");
-  //       throw new Error();
-  //     }
-  //     try {
-  //       const response = await fetch("http://localhost:8081/create", {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           firstName: firstName,
-  //           lastName: lastName,
-  //           email: email,
-  //           password: password,
-  //           confirmPassword: confirmPassword,
-  //         }),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       let resJson = await response.json();
-  //
-  //       if (response.status === 201) {
-  //         setFirstName("");
-  //         setLastName("");
-  //         setEmail("");
-  //         setPassword("");
-  //         setConfirmPassword("");
-  //         setMessage("User has been created!");
-  //       } else {
-  //         setMessage("Something went wrong :(");
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
 
   return (
     <div>
       <h1>Create an Account</h1>
-      <form onSubmit={handleSubmit} /*onSubmit={handleSubmit}*/>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
+          {...register("firstName", {
+            required: "First name can't be blank.",
+          })}
           placeholder="First name"
-          // value={firstName}
-          value={formValues.firstName}
-          onChange={handleChange}
-          // onChange={(e) => setFirstName(e.target.value)}
-          type="text" /*required*/
+          type="text"
         />
+        <p>{errors.firstName?.message}</p>
         <input
+          {...register("lastName", { required: "Last name can't be blank." })}
           placeholder="Last name"
-          value={formValues.lastName}
-          onChange={handleChange}
-          // onChange={(e) => setLastName(e.target.value)}
-          type="text" /*required*/
+          type="text"
         />
+        <p>{errors.lastName?.message}</p>
         <input
+          {...register("email", { required: "Email can't be blank." })}
           placeholder="Email"
-          value={formValues.email}
-          onChange={handleChange}
-          // onChange={(e) => setEmail(e.target.value)}
-          type="email" /*required*/
+          type="email"
         />
+        <p>{errors.email?.message}</p>
         <input
+          {...register("password", {
+            required: "Password can't be blank",
+            minLength: {
+              value: 5,
+              message: "Minimum length is 5",
+            },
+          })}
           placeholder="Password"
-          value={formValues.password}
-          onChange={handleChange}
-          // onChange={(e) => setPassword(e.target.value)}
-          type="password" /*required*/
+          type="password"
         />
+        <p>{errors.password?.message}</p>
         <input
+          {...register("confirmPassword", {
+            required: "Confirm your password.",
+            validate: (value) =>
+              value === password.current || "The passwords do not match",
+          })}
           placeholder="Confirm Password"
-          value={formValues.confirmPassword}
-          onChange={handleChange}
-          // onChange={(e) => setConfirmPassword(e.target.value)}
-          type="password" /*required*/
+          type="password"
         />
+        <p>{errors.confirmPassword?.message}</p>
         <button>Create Account</button>
-        {/* <div>{message ? <p>{message}</p> : null}</div> */}
+        <div>{message ? <p>{message}</p> : null}</div>
       </form>
-      {/* <p>
-        Already have an account? <a href="./LoginComponent.jsx">Login</a>
-      </p> */}
     </div>
   );
 }
