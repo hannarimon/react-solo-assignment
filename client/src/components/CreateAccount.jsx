@@ -8,6 +8,13 @@ function CreateAccount() {
     watch,
     formState: { errors },
   } = useForm({
+    // defaultValues: {
+    //   firstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   password: "",
+    //   confirmPassword: "",
+    // },
     firstName: "",
     lastName: "",
     email: "",
@@ -15,8 +22,8 @@ function CreateAccount() {
     confirmPassword: "",
   });
   const password = useRef({});
-  const [message, setMessage] = useState("");
   password.current = watch("password", "");
+  const [message, setMessage] = useState("");
 
   const onSubmit = async (data) => {
     try {
@@ -90,8 +97,8 @@ function CreateAccount() {
           type="password"
         />
         <p>{errors.confirmPassword?.message}</p>
-        <button>Create Account</button>
-        <div>{message ? <p>{message}</p> : null}</div>
+        <button type="submit">Create Account</button>
+        <p>{message}</p>
       </form>
     </div>
   );
