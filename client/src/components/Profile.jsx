@@ -1,8 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./Profile.css";
-// import image from (../pics/index.jpg)
-// console.log(image)
+import { useNavigate, Link } from "react-router-dom";
 
 function Profile() {
   const redirect = useNavigate();
@@ -12,10 +9,11 @@ function Profile() {
   };
   return (
     <div>
+      <Link className="error-btn" to="/">
+        Home
+      </Link>
       <h1>Login successful, Welcome!</h1>
       <p>Hihi</p>
-      {/* <img src="index.jpg" alt="hello" /> */}
-      {/* <img src={image} alt="lmao" /> */}
       <button type="submit" onClick={logout}>
         Log out
       </button>

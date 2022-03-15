@@ -28,9 +28,12 @@ function Login() {
           "Content-Type": "application/json",
         },
       });
+
       if (response.status === 200) {
         localStorage.setItem("isAuthenticated", true);
         redirect("/profile");
+      } else if (response.status === 401) {
+        setMessage("Incorrect email or password.");
       } else {
         setMessage("Something went wrong, couldn't log in.");
       }
@@ -41,20 +44,21 @@ function Login() {
 
   return (
     <div className="center">
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
+      <Link className="home-btn" to="/">
+        Home
+      </Link>
       <h1>Welcome!</h1>
-
       <form onSubmit={handleSubmit(onSubmit)}>
+        <p>{errors.email?.message}</p>
         <div className="inputbox">
           <input
             {...register("email", { required: "Email can't be blank." })}
             placeholder="Email"
             type="email"
+            autoComplete="off"
           />
         </div>
-        <p>{errors.email?.message}</p>
+        <p>{errors.password?.message}</p>
         <div className="inputbox">
           <input
             {...register("password", {
@@ -68,7 +72,7 @@ function Login() {
             type="password"
           />
         </div>
-        <p>{errors.password?.message}</p>
+
         <div>{message} </div>
         <button className="inputbox login-btn" type="submit">
           Login
@@ -76,7 +80,7 @@ function Login() {
       </form>
 
       <button
-        className="link-tag"
+        className="signIn-btn"
         onClick={() => {
           redirect("/create");
         }}

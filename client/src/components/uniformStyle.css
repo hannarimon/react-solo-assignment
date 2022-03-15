@@ -1,49 +1,38 @@
-.form {
-  display: flex;
-}
-
-.link-tag {
-  cursor: pointer;
-  color: rgb(12, 12, 224);
-  /* padding: 500px; */
-  border: none;
-  background-color: white;
-
-  padding: 0;
-}
-.link-tag:hover {
-  opacity: 0.8;
-}
-/* .container {
-  margin: 500px 0 0 500px;
-} */
-
 @import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
-body {
+* {
+  font-family: "Sansita Swashed", cursive;
   margin: 0;
   padding: 0;
+}
+body {
+  margin-top: 100px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
-  background: linear-gradient(45deg, greenyellow, dodgerblue);
-  font-family: "Sansita Swashed", cursive;
+  overflow: hidden;
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
 }
 .center {
   position: relative;
-  padding: 20px 50px;
+  padding: 30px 50px;
   background: #fff;
   border-radius: 10px;
 }
 .center h1 {
   font-size: 1.75em;
   text-align: center;
-  /* border-left: 5px solid rgb(113, 137, 160); */
   padding: 10px;
   color: #000;
-  letter-spacing: 5px;
-  margin-bottom: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
   font-weight: bold;
   padding-left: 10px;
 }
@@ -51,7 +40,7 @@ body {
   position: relative;
   width: 300px;
   height: 50px;
-  margin-bottom: 33px;
+  margin-bottom: 30px;
 }
 .center .inputbox input {
   position: absolute;
@@ -65,14 +54,53 @@ body {
   border-radius: 10px;
   font-size: 1.2em;
 }
-/* .center .inputbox:last-child {
-  margin-bottom: 0;
-} */
+.center .inputbox:last-child {
+  margin-bottom: 10px;
+}
+
+.home-btn {
+  list-style: none;
+  text-decoration: none;
+  color: black;
+}
+.home-btn:hover {
+  text-decoration: underline;
+  text-decoration-color: black;
+}
 
 .login-btn {
   width: 50%;
-  background: dodgerblue;
+  background: rgb(2, 1, 1);
   color: #fff;
   border: #fff;
   cursor: pointer;
+  font-family: "Sansita Swashed", cursive;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+.signIn-btn {
+  cursor: pointer;
+  background: rgb(2, 1, 1);
+  border: none;
+  background: white;
+}
+.signIn-btn:hover {
+  text-decoration: underline;
+}
+
+.error-btn {
+  list-style: none;
+  text-decoration-color: rgb(1, 109, 209);
+  text-decoration-thickness: 2px;
+  color: black;
+}
+
+.error-btn:hover {
+  text-decoration-color: black;
+}
+
+p {
+  display: inline;
 }

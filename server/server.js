@@ -13,9 +13,7 @@ const auth = require("./routes/auth");
 app.use("/", auth);
 app.use("/create", auth);
 
-mongoose.connect(process.env.DB_CONNECTION, () => {
-  console.log("Connection working");
-});
+mongoose.connect(process.env.DB_CONNECTION, () => {});
 app.listen(8081, () => {
-  console.log("Listening on 8081");
+  console.log("Listening.");
 });

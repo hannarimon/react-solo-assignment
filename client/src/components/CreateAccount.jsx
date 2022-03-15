@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-// import "./CreateAccount.css";
 
 function CreateAccount() {
   const {
@@ -10,13 +9,6 @@ function CreateAccount() {
     watch,
     formState: { errors },
   } = useForm({
-    // defaultValues: {
-    //   firstName: "",
-    //   lastName: "",
-    //   email: "",
-    //   password: "",
-    //   confirmPassword: "",
-    // },
     firstName: "",
     lastName: "",
     email: "",
@@ -55,12 +47,13 @@ function CreateAccount() {
 
   return (
     <div className="center">
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
-      <h1>Create an Account</h1>
+      <Link className="home-btn" to="/">
+        Home
+      </Link>
+      <h1>Create an Account!</h1>
       <p>{message}</p>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <p>{errors.firstName?.message}</p>
         <div className="inputbox">
           <input
             {...register("firstName", {
@@ -68,25 +61,35 @@ function CreateAccount() {
             })}
             placeholder="First name"
             type="text"
-          />
-        </div>
-        <p>{errors.firstName?.message}</p>
-        <div className="inputbox">
-          <input
-            {...register("lastName", { required: "Last name can't be blank." })}
-            placeholder="Last name"
-            type="text"
+            autoComplete="off"
           />
         </div>
         <p>{errors.lastName?.message}</p>
         <div className="inputbox">
           <input
-            {...register("email", { required: "Email can't be blank." })}
-            placeholder="Email"
-            type="email"
+            {...register("lastName", { required: "Last name can't be blank." })}
+            placeholder="Last name"
+            type="text"
+            autoComplete="off"
           />
         </div>
         <p>{errors.email?.message}</p>
+        <div className="inputbox">
+          <input
+            {...register("email", {
+              required: "Email can't be blank.",
+              pattern: {
+                value:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Enter a valid email.",
+              },
+            })}
+            placeholder="Email"
+            type="email"
+            autoComplete="off"
+          />
+        </div>
+        <p>{errors.password?.message}</p>
         <div className="inputbox">
           <input
             {...register("password", {
@@ -100,8 +103,7 @@ function CreateAccount() {
             type="password"
           />
         </div>
-
-        <p>{errors.password?.message}</p>
+        <p>{errors.confirmPassword?.message}</p>
         <div className="inputbox">
           <input
             {...register("confirmPassword", {
@@ -113,7 +115,6 @@ function CreateAccount() {
             type="password"
           />
         </div>
-        <p>{errors.confirmPassword?.message}</p>
 
         <button className="inputbox login-btn" type="submit">
           Create Account
