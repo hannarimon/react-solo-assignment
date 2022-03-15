@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import "./Home.css";
-
+import { useNavigate, Link } from "react-router-dom";
+import "./uniformStyle.css";
 function Login() {
   const redirect = useNavigate();
+  const [message, setMessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -17,7 +17,6 @@ function Login() {
     confirmPassword: "",
   });
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const response = await fetch("http://localhost:8081", {
         method: "POST",
@@ -29,52 +28,57 @@ function Login() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
       if (response.status === 200) {
+        localStorage.setItem("isAuthenticated", true);
         redirect("/profile");
       } else {
-        console.log("error");
+        setMessage("Something went wrong, couldn't log in.");
       }
-      // if (response.status === 201) {
-      //   setMessage("User has been created!");
-      // } else {
-      //   setMessage("Something went wrong :(");
-      // }
     } catch (err) {
       console.log(err);
     }
   };
 
-  let navigate = useNavigate();
   return (
-    <div>
-      <h1>Welcome back!</h1>
+    <div className="center">
+      <nav>
+        <Link to="/">Home</Link>
+      </nav>
+      <h1>Welcome!</h1>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("email", { required: "Email can't be blank." })}
-          placeholder="Email"
-          type="email"
-        />
+        <div className="inputbox">
+          <input
+            {...register("email", { required: "Email can't be blank." })}
+            placeholder="Email"
+            type="email"
+          />
+        </div>
         <p>{errors.email?.message}</p>
-        <input
-          {...register("password", {
-            required: "Password can't be blank",
-            minLength: {
-              value: 5,
-              message: "Minimum length is 5",
-            },
-          })}
-          placeholder="Password"
-          type="password"
-        />
+        <div className="inputbox">
+          <input
+            {...register("password", {
+              required: "Password can't be blank.",
+              minLength: {
+                value: 5,
+                message: "Minimum length is 5.",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+          />
+        </div>
         <p>{errors.password?.message}</p>
-        <button type="submit">Login</button>
+        <div>{message} </div>
+        <button className="inputbox login-btn" type="submit">
+          Login
+        </button>
       </form>
 
       <button
         className="link-tag"
         onClick={() => {
-          navigate("/create");
+          redirect("/create");
         }}
       >
         {"Create an Account"}
