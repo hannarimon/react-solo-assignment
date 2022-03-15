@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+// import "./CreateAccount.css";
 
 function CreateAccount() {
   const {
@@ -52,53 +54,70 @@ function CreateAccount() {
   };
 
   return (
-    <div>
+    <div className="center">
+      <nav>
+        <Link to="/">Home</Link>
+      </nav>
       <h1>Create an Account</h1>
+      <p>{message}</p>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("firstName", {
-            required: "First name can't be blank.",
-          })}
-          placeholder="First name"
-          type="text"
-        />
+        <div className="inputbox">
+          <input
+            {...register("firstName", {
+              required: "First name can't be blank.",
+            })}
+            placeholder="First name"
+            type="text"
+          />
+        </div>
         <p>{errors.firstName?.message}</p>
-        <input
-          {...register("lastName", { required: "Last name can't be blank." })}
-          placeholder="Last name"
-          type="text"
-        />
+        <div className="inputbox">
+          <input
+            {...register("lastName", { required: "Last name can't be blank." })}
+            placeholder="Last name"
+            type="text"
+          />
+        </div>
         <p>{errors.lastName?.message}</p>
-        <input
-          {...register("email", { required: "Email can't be blank." })}
-          placeholder="Email"
-          type="email"
-        />
+        <div className="inputbox">
+          <input
+            {...register("email", { required: "Email can't be blank." })}
+            placeholder="Email"
+            type="email"
+          />
+        </div>
         <p>{errors.email?.message}</p>
-        <input
-          {...register("password", {
-            required: "Password can't be blank",
-            minLength: {
-              value: 5,
-              message: "Minimum length is 5",
-            },
-          })}
-          placeholder="Password"
-          type="password"
-        />
+        <div className="inputbox">
+          <input
+            {...register("password", {
+              required: "Password can't be blank.",
+              minLength: {
+                value: 5,
+                message: "Minimum length is 5.",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+          />
+        </div>
+
         <p>{errors.password?.message}</p>
-        <input
-          {...register("confirmPassword", {
-            required: "Confirm your password.",
-            validate: (value) =>
-              value === password.current || "The passwords do not match",
-          })}
-          placeholder="Confirm Password"
-          type="password"
-        />
+        <div className="inputbox">
+          <input
+            {...register("confirmPassword", {
+              required: "Confirm your password.",
+              validate: (value) =>
+                value === password.current || "The passwords do not match.",
+            })}
+            placeholder="Confirm Password"
+            type="password"
+          />
+        </div>
         <p>{errors.confirmPassword?.message}</p>
-        <button type="submit">Create Account</button>
-        <p>{message}</p>
+
+        <button className="inputbox login-btn" type="submit">
+          Create Account
+        </button>
       </form>
     </div>
   );
