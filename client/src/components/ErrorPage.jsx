@@ -5,10 +5,14 @@ function ErrorPage() {
   // let navigate = useNavigate();
   return (
     <div>
-      <p>You do not have the rights for this page. Login and try again.</p>
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
+      <h2>
+        You do not have the rights for this page. Go to{" "}
+        <Link className="error-btn" to="/">
+          Home
+        </Link>{" "}
+        to login and try again.
+      </h2>
+      <p>Not Hihi :(</p>
     </div>
   );
 }

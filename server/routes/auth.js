@@ -6,20 +6,19 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    if (email == "" || password == "") {
+    if (!email || !password) {
       res.status(401).json({
         status: "Failure",
-        message: "Email or password needs to be filled in",
+        message: "Email or password needs to be filled in.",
       });
       return;
     }
     const user = await User.findOne({ email }).select("+password");
-
     if (!user || !(await user.comparePassword(password, user.password))) {
-      res
-        .status(401)
-        .json({ status: "Failure", message: "Incorrect email or password" });
+      res.status(401).json({
+        status: "Failure",
+        message: "Incorrect email or password.",
+      });
       return;
     }
   } catch (err) {
