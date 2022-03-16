@@ -14,7 +14,7 @@ function Profile() {
       </Link>
       <h1>Login successful, Welcome!</h1>
       <p>Hihi</p>
-      <button type="submit" onClick={logout}>
+      <button className="logout-btn btn-hover" type="submit" onClick={logout}>
         Log out
       </button>
     </div>

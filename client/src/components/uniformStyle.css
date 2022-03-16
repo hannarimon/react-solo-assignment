@@ -77,8 +77,8 @@ body {
   font-family: "Sansita Swashed", cursive;
 }
 
-.login-btn:hover {
-  opacity: 0.9;
+.btn-hover:hover {
+  opacity: 0.8;
 }
 .signIn-btn {
   cursor: pointer;
@@ -101,6 +101,13 @@ body {
   text-decoration-color: black;
 }
 
-p {
-  display: inline;
+.logout-btn {
+  list-style: none;
+  color: white;
+  border: none;
+  background: rgb(2, 1, 1);
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }

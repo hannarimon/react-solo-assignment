@@ -52,9 +52,16 @@ function Login() {
         <p>{errors.email?.message}</p>
         <div className="inputbox">
           <input
-            {...register("email", { required: "Email can't be blank." })}
+            {...register("email", {
+              required: "Email can't be blank.",
+              pattern: {
+                value:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Enter a valid email.",
+              },
+            })}
             placeholder="Email"
-            type="email"
+            type="text"
             autoComplete="off"
           />
         </div>
@@ -74,7 +81,7 @@ function Login() {
         </div>
 
         <div>{message} </div>
-        <button className="inputbox login-btn" type="submit">
+        <button className="inputbox login-btn btn-hover" type="submit">
           Login
         </button>
       </form>
