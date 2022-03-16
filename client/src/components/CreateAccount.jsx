@@ -85,7 +85,7 @@ function CreateAccount() {
               },
             })}
             placeholder="Email"
-            type="email"
+            type="text"
             autoComplete="off"
           />
         </div>
@@ -116,7 +116,7 @@ function CreateAccount() {
           />
         </div>
 
-        <button className="inputbox login-btn" type="submit">
+        <button className="inputbox login-btn btn-hover" type="submit">
           Create Account
         </button>
       </form>
